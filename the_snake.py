@@ -8,6 +8,12 @@ GRID_SIZE = 20
 GRID_WIDTH = SCREEN_WIDTH // GRID_SIZE
 GRID_HEIGHT = SCREEN_HEIGHT // GRID_SIZE
 
+# Координаты всех клеток игрового поля
+ALL_POSITIONS = {
+    (x * GRID_SIZE, y * GRID_SIZE) for x in range(GRID_WIDTH)
+    for y in range(GRID_HEIGHT)
+}
+
 # Координаты центра поля:
 SCREEN_CENTER = ((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2))
 
@@ -82,11 +88,7 @@ class Apple(GameObject):
         Устанавливает случайное положение яблока на игровом поле
         c учётом координат занятых змейкой.
         """
-        all_positions = []
-        for x in range(GRID_WIDTH):
-            for y in range(GRID_HEIGHT):
-                all_positions.append((x * GRID_SIZE, y * GRID_SIZE))
-        self.position = choice(list(set(all_positions) - set(snake_positions)))
+        self.position = choice(tuple(ALL_POSITIONS - set(snake_positions)))
 
     def draw(self):
         """Отрисовывает яблоко на игровой поверхности."""
